@@ -1,6 +1,6 @@
 # Course lifecycle mail templates for an edtech service
 
-The decision logic here is deliberately tiny. If a learner is incomplete and their course deadline is within three days, they get a deadline reminder; otherwise they get a progress update. We validate that domain input with zod, build one reusable email template, and send the picked message through Infrai using one key and one plain REST interface.
+The runnable decision is small: an incomplete learner whose course deadline is within three days receives a deadline reminder; everyone else receives a progress update. The service validates that domain input with zod, creates a reusable email template, and sends the chosen message through Infrai with one key and one plain REST interface.
 
 ## Run the decision locally
 
@@ -9,7 +9,7 @@ npm install
 npm test
 ```
 
-The focused test sets `deadline` two days out and `progressPercent: 60`; it asserts `"deadline"`. No API call happens in this path, so it stays fast and offline.
+The focused test supplies `deadline` two days away and `progressPercent: 60`; it expects `"deadline"`. This test does not contact the API.
 
 ## Send a real sample
 
@@ -23,7 +23,7 @@ npm run demo
 
 ## Copy the pattern
 
-Treat the learner/course object as your app contract, then swap the two HTML strings for your own lifecycle content. Namespaced template names in the demo keep repeated local runs pointed at distinct templates, and the idempotency key on each write gives retries a stable identity. Missed-job postmortems taught us that one.
+Keep the learner/course object as your application contract, then replace the two HTML strings with your own lifecycle content. Namespaced template names in the demo make repeated local runs address distinct templates, while the idempotency key on each write gives retries a stable identity.
 
 ## License
 
